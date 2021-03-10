@@ -90,7 +90,7 @@ public class DBPlayers
         try
         {
             statement = connection.createStatement();
-            statement.executeUpdate("update players set connected = "+connected+" where '"+uuid+"'");
+            statement.executeUpdate("update players set connected = "+connected+" where uuid = '"+uuid+"'");
             return true;
         }
         catch (SQLException sqlException)
@@ -136,12 +136,12 @@ public class DBPlayers
         try
         {
             statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select uuid, time_played from players");
+            ResultSet resultSet = statement.executeQuery("select uuid from players");
             while (resultSet.next())
             {
                 if (uuid.equals(resultSet.getString("uuid")))
                 {
-                    statement.executeUpdate("update players set time_played = "+playerTime+" where '"+uuid+"'");
+                    statement.executeUpdate("update players set time_played = "+playerTime+" where uuid = '"+uuid+"'");
                     statement.close();
                     return true;
                 }
