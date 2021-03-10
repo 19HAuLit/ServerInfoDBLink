@@ -96,6 +96,7 @@ public class DBPlayers
         catch (SQLException sqlException)
         {
             sqlException.printStackTrace();
+
             return false;
         }
     }
