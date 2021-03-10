@@ -1,5 +1,5 @@
 name: ServerInfoDBLink
 main: fr.gottagras.serverinfodblink.Main
-version: 0.1
+version: 0.2
 description: Pouvoir transmettre les informations de votre serveur sur une DB
 author: 19HAuLit

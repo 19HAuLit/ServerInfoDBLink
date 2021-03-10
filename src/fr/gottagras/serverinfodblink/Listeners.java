@@ -20,14 +20,14 @@ public class Listeners implements Listener {
         Player player = event.getPlayer();
         String uuid = player.getUniqueId().toString();
         // CREATE PLAYER IF NOT EXIST
-        if (!new DBMain(main).checkPlayerExists(main.connection, uuid))
+        if (!new DBPlayers(main).checkPlayerExists(main.connection, uuid))
         {
-            boolean createPlayer = new DBMain(main).createPlayer(main.connection, uuid);
+            boolean createPlayer = new DBPlayers(main).createPlayer(main.connection, uuid);
             if (createPlayer) System.out.println(main.prefix+" "+player.getDisplayName()+" a bien ete ajoute a la base donnee");
             else System.out.println(main.prefix+" Erreur lors de l'ajout du joueur dans la base de donnee");
         }
         // UPDATE CONNECTED
-        if (!new DBMain(main).changeConnected(main.connection, uuid, true)) System.out.println(main.prefix+" Erreur lors de la connection du joueur");
+        if (!new DBPlayers(main).changeConnected(main.connection, uuid, true)) System.out.println(main.prefix+" Erreur lors de la connection du joueur");
     }
 
     @EventHandler
@@ -37,6 +37,6 @@ public class Listeners implements Listener {
         Player player = event.getPlayer();
         String uuid = player.getUniqueId().toString();
         // UPDATE CONNECTED
-        if (!new DBMain(main).changeConnected(main.connection, uuid, false)) System.out.println(main.prefix+" Erreur lors de la deconnection du joueur");
+        if (!new DBPlayers(main).changeConnected(main.connection, uuid, false)) System.out.println(main.prefix+" Erreur lors de la deconnection du joueur");
     }
 }

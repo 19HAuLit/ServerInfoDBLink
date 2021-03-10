@@ -4,3 +4,5 @@ db:
   user: root
   password:
   db: minecraft
+minecraft:
+  ip: localhost

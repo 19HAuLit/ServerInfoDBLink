@@ -18,6 +18,7 @@ public class ServerTimer {
             @Override
             public void run()
             {
+                /** PLAYERS*/
                 String uuid;
                 // UPDATE DB
                 for (Player player:Bukkit.getOnlinePlayers())
@@ -25,9 +26,11 @@ public class ServerTimer {
                     // GET UUID
                     uuid = player.getUniqueId().toString();
                     // UPDATE TIME
-                    int playerTime = new DBMain(main).getTimePlayed(main.connection, uuid) + 1;
-                    if (!new DBMain(main).updateTimePlayed(main.connection, uuid, playerTime)) System.out.println(main.prefix+" Erreur lors de l'update");
+                    int playerTime = new DBPlayers(main).getTimePlayed(main.connection, uuid) + 1;
+                    if (!new DBPlayers(main).updateTimePlayed(main.connection, uuid, playerTime)) System.out.println(main.prefix+" Erreur lors de l'update");
                 }
+                /** SERVER */
+                if (!new DBServer(main).updateServer(main.connection)) System.out.println(main.prefix+" Erreur lors de l'update");
             }
         },0,20);
     }
