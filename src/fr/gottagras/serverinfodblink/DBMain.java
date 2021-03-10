@@ -37,6 +37,7 @@ public class DBMain
         try
         {
             connection = dataSource.getConnection();
+            System.out.println("Oe Oe");
         }
         catch (SQLException sqlException)
         {
@@ -74,15 +75,20 @@ public class DBMain
             ResultSet resultSet = statement.executeQuery("select uuid from players");
             while (resultSet.next())
             {
-                if (uuid.equals(resultSet.getString("uuid"))) return true;
-                else return false;
+                if (uuid.equals(resultSet.getString("uuid")))
+                {
+                    statement.close();
+                    return true;
+                }
             }
+            statement.close();
+            return false;
         }
         catch (SQLException sqlException)
         {
             sqlException.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     // CREATE PLAYER
@@ -94,12 +100,13 @@ public class DBMain
         {
             statement = connection.createStatement();
             statement.executeUpdate("INSERT INTO players VALUES ('"+uuid+"', 0, 0)");
+            statement.close();
             return true;
         }
         catch (SQLException sqlException) {
             sqlException.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     // DECONNECTION DE LA BASE DE DONNEE
@@ -149,16 +156,24 @@ public class DBMain
             ResultSet resultSet = statement.executeQuery("select uuid, time_played from players");
             while (resultSet.next())
             {
-                if (uuid.equals(resultSet.getString("uuid"))) return resultSet.getInt("time_played");
-                else return 0;
+                if (uuid.equals(resultSet.getString("uuid")))
+                {
+                    int time_played = resultSet.getInt("time_played");
+                    statement.close();
+                    return time_played;
+                }
             }
+            statement.close();
+            return 0;
         }
         catch (SQLException sqlException)
         {
             sqlException.printStackTrace();
+            return 0;
         }
-        return 0;
     }
+
+    // CHANGER LE TEMPS DE JEU D UN JOUEUR
 
     public boolean updateTimePlayed(Connection connection, String uuid, int playerTime)
     {
@@ -172,15 +187,17 @@ public class DBMain
                 if (uuid.equals(resultSet.getString("uuid")))
                 {
                     statement.executeUpdate("update players set time_played = "+playerTime+" where '"+uuid+"'");
+                    statement.close();
                     return true;
                 }
-                else return false;
             }
+            statement.close();
+            return false;
         }
         catch (SQLException sqlException)
         {
             sqlException.printStackTrace();
+            return false;
         }
-        return false;
     }
 }
